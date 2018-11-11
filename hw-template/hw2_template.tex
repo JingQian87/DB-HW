@@ -1,0 +1,233 @@
+\documentclass{article}
+% \usepackage[UTF8]{ctex}
+
+% \usepackage[T1]{fontenc}
+% \usepackage{CJKutf8}
+
+\usepackage{bera}% optional: just to have a nice mono-spaced font
+\usepackage{listings}
+\usepackage{xcolor}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+\usepackage{CJKutf8}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{clrscode3e}
+\usepackage{mathtools}
+\usepackage{nccmath}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ left=25mm,
+ top=25mm,
+}
+
+\title{COMS 4111 Intro to DB HW2}
+\author{Jing Qian (jq2282)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\pagebreak
+
+% Right!
+\section{Relational Algebra}
+\begin{itemize}
+    \item Q1: 
+    $\pi_{name} (\sigma_{month=November\ \cap\ county='Clarke'\ \cup\ county = 'Marshall'} (liquors \bowtie_{lid}sales)) $.
+    
+    \item Q2: 
+    $p(tmp, \sigma_{county = 'Marshall'\ \cap\ month = January} (sales))$, 
+    $\pi_{manufacturer} (liquors \bowtie_{lid} tmp) $
+\end{itemize}
+
+\newpage
+
+\section{More Relational Algebra}
+
+\begin{enumerate}
+    \item $\pi_{A,B}(T1)$: 
+    
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{A} & \textbf{B} \\ \hline
+1          & x          \\ \hline
+2          & y          \\ \hline
+2          & z          \\ \hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%
+    \item $T1 \times \pi _A(T1)$:    
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|l|}
+ \hline
+\textbf{(A)} & \textbf{B} & \textbf{(A)} \\ \hline
+1   & x & 1   \\ \hline
+1   & x & 2   \\ \hline
+2   & y & 1   \\ \hline
+2   & y & 2   \\ \hline
+2   & z & 1   \\ \hline
+2   & z & 2  \\ \hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%
+    \item $T1 \bowtie_{T1.B=T2.C} T2$: 
+    
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{A} & \textbf{(B)} & \textbf{(C)} & \textbf{(B)} & \textbf{(C)} & \textbf{D} \\ \hline
+1          & x            & a            & 1   & x   & c \\ \hline
+1          & x            & 2            & 3   & x   & a \\ \hline
+2          & y            & 1            & 2   & y   & c \\ \hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%% 
+    \item $T1 - (T1 \cap T2)$:  
+    \color{red} $T1 \cap T2$ = NULL?
+    \color{black}
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{C} \\ \hline
+1          & x          & a          \\ \hline
+2          & y          & b          \\ \hline
+2          & z          & c          \\ \hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%     
+    \item $T1 \bowtie_{T1.A < T2.B} (\sigma_{B<=2}(T2))$: 
+    
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{A} & \textbf{(B)} & \textbf{(C)} & \textbf{(B)} & \textbf{(C)} & \textbf{D} \\ \hline
+1          & x            & a            & 1            & x            & c          \\ \hline
+1          & x            & a            & 2            & y            & c          \\ \hline
+2          & y            & b            & 1            & x            & c          \\ \hline
+2          & y            & b            & 2            & y            & c          \\ \hline
+2          & z            & c            & 1            & x            & c          \\ \hline
+2          & z            & c            & 2            & y            & c          \\ \hline
+\end{tabular}
+\end{table}
+%%%%%%%%%%%%%%%    
+    \item $T1 \bowtie (\sigma{B=C}(T2))$: 
+         \color{red}$\sigma_{B=c}(T2)$ = NULL?
+    \color{black}
+\begin{table}[!h] \centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{A} & \textbf{B} & \textbf{C} \\ \hline
+1          & x          & a          \\ \hline
+2          & y          & b          \\ \hline
+2          & z          & c          \\ \hline
+\end{tabular}
+\end{table}
+\end{enumerate}
+
+\newpage
+%%%%%%%%%%%%%%%    
+\section{SQL}
+
+\begin{enumerate}
+    \item $\pi _{name,age}(Student)$
+    \begin{lstlisting}
+        SELECT name, age 
+        FROM Student
+    \end{lstlisting}
+    
+    \item $Student \times \pi_{age}(Student)$
+    \begin{lstlisting}
+        WITH SA(age) AS
+        	(SELECT S1.age
+		FROM Student as S1)
+          
+        SELECT * 
+        FROM Student
+        CROSS JOIN SA  
+    \end{lstlisting}
+    
+    \item $Student \bowtie_{Student.name=Teacher.name} Teacher $
+    \begin{lstlisting}
+        SELECT *
+        FROM Student as S, Teacher as T
+        WHERE S.name = T.name
+    \end{lstlisting}
+    
+    \item $Student - (Student \cap Teacher)$
+    \begin{lstlisting}
+        SELECT *
+        FROM Student as S
+        WHERE S.* NOT IN (  
+        	SELECT *
+       		FROM Teacher as T
+        )
+        
+    \end{lstlisting}
+    
+    \item $(\sigma_{year=2018}(Student) )\bowtie_{Student.age < Teacher.age} (\sigma_{name=engene}(Teacher))$
+    \begin{lstlisting}
+        SELECT *
+        FROM Student as S, Teacher as T
+        WHERE S.year = 2018 AND
+      	      S.age < T.age AND 
+	      T.name = eugene
+    \end{lstlisting}
+    
+    \item $Student \bowtie (\sigma_{age<=50}(Teacher))$
+    \begin{lstlisting}
+        SELECT *
+        FROM Student as S, Teacher as T
+        WHERE T.age <= 50
+    \end{lstlisting}
+\end{enumerate}
+
+
+\newpage
+\section{Acknowledgement}
+
+
+
+
+
+\end{document} 

@@ -1,0 +1,59 @@
+CREATE TABLE graduate_affli(
+	UNI text,
+	name text,
+	date_of_birth Date,
+	research_field text,
+	depart_name text UNIQUE NOT NULL,
+	PRIMARY KEY (UNI),
+	FOREIGN KEY (depart_name) REFERENCES department,
+	CHECK (GETDATE() - date_of_birth >= 18)
+)
+
+CREATE TABLE undergraduate_affli(
+	UNI text,
+	name text,
+	date_of_birth Date,
+	concentration text,
+	depart_name text UNIQUE NOT NULL,
+	PRIMARY KEY (UNI),
+	FOREIGN KEY (depart_name) REFERENCES department,
+	CHECK (GETDATE() - date_of_birth >= 18)
+)
+
+CREATE TABLE department(
+	depart_name text,
+	address text,
+	PRIMARY KEY (depart_name)
+)
+
+CREATE TABLE own_course(
+	course_id int,
+	course_name text,
+	capacity int,
+	depart_name text NOT NULL,
+	PRIMARY KEY (course_id, depart_name),
+	FOREIGN KEY (depart_name) REFERENCES department
+		ON DELETE CASCADE
+)
+
+CREATE TABLE enroll(
+	UNI text,
+	course_id int,
+	FOREIGN KEY (course_id) REFERENCES own_course,
+	FOREIGN KEY (UNI) REFERENCES graduate_affli,
+	FOREIGN KEY (UNI) REFERENCES undergraduate_affli
+)
+
+CREATE TABLE offer_term(
+	course_id int,
+	depart_name text,
+	semester text,
+	t_year text,
+	PRIMARY KEY (course_id, depart_name, semester, t_year),
+	FOREIGN KEY (semester, t_year) REFERENCES terms,
+	FOREIGN KEY (course_id, depart_name) REFERENCES own_course
+)
+
+There is a constraint that the sql cannot express:
+	students should be enrolled in at least one course. 
+	This constraint needs to be enacted at the application level, because the database cannot create the relationship automatically.
