@@ -63,7 +63,7 @@
 
 \title{COMS 4111 Intro to DB HW3 - Part 2 \\
 Normalization}
-\author{Name (UNI)}
+\author{Jing Qian (jq2282)}
 % \subtitle{ASSIGNED: OCTOBER 18th, 2018}
 \date{ASSIGNED: October 18th, 2018 \\
 DUE: November 15th, 2018}
@@ -80,8 +80,8 @@ DUE: November 15th, 2018}
 \section*{Q2.1}
 \paragraph{Write answers here.}
 \begin{enumerate}[label=\alph*]
-    \item
-    \item
+    \item All the non-trivial functional dependencies in the closure that have only one attribute on the right ride are: $B \rightarrow C, C \rightarrow A, B \rightarrow A$.
+    \item The minimal key of R is B.
 \end{enumerate}
 
 \newpage
@@ -89,14 +89,15 @@ DUE: November 15th, 2018}
 \section*{Q2.2}
 \paragraph{Write answers here.}
 \begin{enumerate}[label=\alph*]
-    \item
-    \item
+    \item All the non-trivial functional dependencies in the closure that have only one attribute on the right ride are: $AB \rightarrow D, BD \rightarrow C, CD \rightarrow A, AD \rightarrow B, AB \rightarrow C, BD \rightarrow A, AD \rightarrow C, CD \rightarrow B$.
+    \item The minimal keys of S are AB, or BD, or AD, or CD.
 \end{enumerate}
 
 \newpage
 
 \section*{Q2.3}
 \paragraph{Write answers here.}
+The keys in iowa are date, store, vendor\_no, itemno, invoice\_line\_no.
 
 \section*{Q2.4}
 \paragraph{Write answers here.}
@@ -105,14 +106,16 @@ DUE: November 15th, 2018}
 \section*{Q2.5}
 \paragraph{Write answers here.}
 
+
 \section*{Q2.6}
 \paragraph{Write answers here.}
+No, I can't. Because function dependencies are about relationship between attributes, hence they could not be used to constrain the value of one certain column.
 
 \section*{Q2.7}
 \paragraph{Write answers here.}
 \begin{enumerate}[label=\alph*]
-    \item
-    \item
+    \item There is only one vendor\_name value for itemno number '3326' in the iowa dataset.
+    \item Yes, it should be. Because the same product should have the same vendor. The relationship between item and vendor should be one to many.
 \end{enumerate}
 
 \newpage
