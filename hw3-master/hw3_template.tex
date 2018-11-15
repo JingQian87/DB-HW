@@ -80,7 +80,7 @@ DUE: November 15th, 2018}
 \section*{Q2.1}
 \paragraph{Write answers here.}
 \begin{enumerate}[label=\alph*]
-    \item All the non-trivial functional dependencies in the closure that have only one attribute on the right ride are: $B \rightarrow C, C \rightarrow A, B \rightarrow A$.
+    \item All the non-trivial functional dependencies in the closure that have only one attribute on the right side are: $B \rightarrow C, C \rightarrow A, B \rightarrow A$.
     \item The minimal key of R is B.
 \end{enumerate}
 
@@ -102,9 +102,46 @@ The keys in iowa are date, store, vendor\_no, itemno, invoice\_line\_no.
 \section*{Q2.4}
 \paragraph{Write answers here.}
 
+For simplicity, we represent every attribute with one letter:\\
+addree = A, bottle\_volumn\_ml = B, category = C, category\_name = D, city = E, county = F, county\_number = G, date = H, im\_desc = I, invoice\_line\_no = J, itemno = K, name = L, pack = M, sale\_bottles = N, sale\_dollars = O, sale\_gallons = P, sale\_liters = Q, state\_bottle\_cost = R, state\_bottle\_retail = S, store = T, store\_location\_address = U, store\_location\_city = V, store\_location\_zip = W, vendor\_name = X, vendor\_no= Y, vendor\_no = Z, store\_location = $\alpha$.
+
+So the functional dependencies could be represented as: T -> AEFGLUVWZ$\alpha$, Y -> X, C -> D, K -> BCIRS, HKJTY -> MNOPQ.
+
+And we could get the minimum cover: $F_{min} = $ \{T -> A, T -> E, T -> F, T -> G, T -> L, T -> U, T -> V, T -> W, T -> Z, T -> $\alpha$, Y -> X, C -> D, K -> B, K -> C, K -> I, K -> R, K -> S, HKJTY -> M, HKJTY -> N, HKJTY -> O, HKJTY -> P, HKJTY -> Q\}.
+
+Then we do the composition as following: 
+
+Applying 'Y -> X': 'YX', 'ABCDEFGHIJKLMNOPQRSTUVWYZ$\alpha$'.
+
+Applying 'C -> D': 'YX', 'CD', 'ABCEFGHIJKLMNOPQRSTUVWYZ$\alpha$'.
+
+Applying 'T -> AEFGLUVWZ$\alpha$': 'YX', 'CD', 'AEFGLTUVWZ$\alpha$', 'BCHIJKMNOPQRSTY'.
+
+Applying 'K -> BCIRS': 'YX', 'CD', 'AEFGLTUVWZ$\alpha$', 'BCIKRS', 'HJKMNOPQTY'.
+
+Check the $F_{min}$, all functional dependencies are covered and no redundancy.
+So this is the 3NF decomposition for the table: 'YX', 'CD', 'AEFGLTUVWZ$\alpha$', 'BCIKRS', 'HJKMNOPQTY'.
+Write in the name of attributes:
+
+[vendor\_name, vendor\_no].
+
+[category, category\_name].
+
+[addree, city, county, county\_number, name, store, store\_location\_address, store\_location\_city, store\_location\_zip, zipcode, store\_location].
+
+[bottle\_volumn\_ml, category, im\_desc, itemno, state\_bottle\_cost, state\_bottle\_retail].
+
+[date, invoice\_line\_no, itemno, pack, sale\_bottles, sale\_dollars, sale\_gallons, sale\_liters, store, vendor\_no].
+
 
 \section*{Q2.5}
 \paragraph{Write answers here.}
+
+Yes, my schema is free of redundancies and anomalies. 
+All the sub-relations have been confirmed without redundancies.
+Moreover, it is a 3NF decomposition and there are no lost joins (original relation could be recovered from the join of the sub-relations) or lost dependencies (checked with $F_{min}$).
+So there is no anomalies.
+
 
 
 \section*{Q2.6}
